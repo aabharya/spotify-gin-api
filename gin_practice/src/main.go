@@ -47,17 +47,18 @@ func getAlbumByID(c *gin.Context) {
 }
 
 func main() {
-	api := gin.Default()
-
-	api.GET("/albums", getAlbums)
-	api.GET("/albums/:id", getAlbumByID)
-	api.POST("/albums", createAlbum)
+	router := gin.Default()
+	router.Static("/static/", "../public")
+	albumsRouter := router.Group("/albums")
+	albumsRouter.GET("/", getAlbums)
+	albumsRouter.GET("/:id", getAlbumByID)
+	albumsRouter.POST("/", createAlbum)
 	// Health check route
-	api.GET("/healthcheck", func(c *gin.Context) {
+	router.GET("/healthcheck", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "OK",
 		})
 	})
 
-	api.Run(":4030")
+	router.Run(":4030")
 }
