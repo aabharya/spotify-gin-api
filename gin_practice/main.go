@@ -4,13 +4,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/BinDruid/go-practice/gin_practice/src/albums"
+	"github.com/BinDruid/go-practice/gin_practice/albums"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
-	router.Static("/static/", "../public")
+	router.Static("/static/", "./public")
 	albumsRouter := router.Group("/albums")
 	albumsRouter.GET("/", albums.GetAll)
 	albumsRouter.GET("/:id", albums.GetByID)
