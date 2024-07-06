@@ -1,0 +1,19 @@
+version: '3.9'
+
+volumes:
+  DB_DATA:
+
+services:
+  db:
+    image: "postgres:15-alpine"
+    restart: "no"
+    ports:
+      - "5314:5432"
+    environment:
+      POSTGRES_USER: go_practice
+      POSTGRES_PASSWORD: 123456
+      PGPASSWORD: 123456
+      POSTGRES_DB: go_practice
+      PGDATA: /db_data
+    volumes:
+      - DB_DATA:/db_data
