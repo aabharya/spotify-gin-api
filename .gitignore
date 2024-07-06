@@ -25,12 +25,11 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+http-client.env.json
 
 # Goland config
 .idea/
 
-
 # Go workspace file
 go.work
 go.work.sum
-
