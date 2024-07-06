@@ -1,0 +1,18 @@
+###
+GET {{base_url}}/albums/
+Accept: application/json
+
+###
+GET {{base_url}}/albums/1/
+Accept: application/json
+
+###
+POST {{base_url}}/albums/
+Accept: application/json
+
+{"title": "Ali",
+"artist": "Abharya",
+"price": 400
+}
+###
+
