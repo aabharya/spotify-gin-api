@@ -9,7 +9,8 @@ import (
 )
 
 func init() {
-	connections.Init()
+	connections.InitDB()
+	connections.InitCache()
 }
 
 func main() {
