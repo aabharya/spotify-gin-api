@@ -3,16 +3,8 @@ package cruds
 import (
 	"github.com/BinDruid/go-practice/gin_practice/models"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"net/http"
 )
-
-type Album struct {
-	gorm.Model
-	Title  string `json:"title"`
-	Artist string `json:"artist"`
-	Price  uint   `json:"price"`
-}
 
 func GetAllAlbums(c *gin.Context) {
 	var albums []models.Album
@@ -21,7 +13,7 @@ func GetAllAlbums(c *gin.Context) {
 }
 
 func CreateAlbum(c *gin.Context) {
-	var newAlbum Album
+	var newAlbum models.Album
 
 	if err := c.BindJSON(&newAlbum); err != nil {
 		return
