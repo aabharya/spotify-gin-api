@@ -8,8 +8,11 @@ import (
 	"net/http"
 )
 
-func main() {
+func init() {
 	models.ConnectDatabase()
+}
+
+func main() {
 	router := gin.Default()
 	router.Static("/static/", "./public/")
 	albumsRouter := router.Group("/albums/")
