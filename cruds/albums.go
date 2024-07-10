@@ -1,8 +1,8 @@
 package cruds
 
 import (
-	"github.com/BinDruid/go-practice/gin_practice/connections"
-	"github.com/BinDruid/go-practice/gin_practice/models"
+	"github.com/BinDruid/go-practice/connections"
+	"github.com/BinDruid/go-practice/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
