@@ -3,6 +3,7 @@ package connections
 import (
 	"fmt"
 	"github.com/BinDruid/go-practice/models"
+	_ "github.com/joho/godotenv/autoload"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"os"

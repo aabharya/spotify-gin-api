@@ -2,6 +2,7 @@ package connections
 
 import (
 	"fmt"
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/redis/go-redis/v9"
 	"os"
 )
