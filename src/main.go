@@ -15,7 +15,7 @@ func init() {
 
 func main() {
 	router := gin.Default()
-	router.Static("/static/", "./public/")
+	router.Static("/static/", "../public/")
 	albumsRouter := router.Group("/albums/")
 	albumsRouter.GET("/", cruds.GetAllAlbums)
 	albumsRouter.GET("/:id/", cruds.GetAlbumByID)
