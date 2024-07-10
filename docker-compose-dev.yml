@@ -17,3 +17,9 @@ services:
       PGDATA: /db_data
     volumes:
       - DB_DATA:/db_data
+
+  redis:
+    restart: unless-stopped
+    image: redis:7.2-alpine
+    expose:
+      - "6378:6379"
