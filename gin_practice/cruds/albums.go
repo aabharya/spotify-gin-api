@@ -1,6 +1,7 @@
 package cruds
 
 import (
+	"github.com/BinDruid/go-practice/gin_practice/connections"
 	"github.com/BinDruid/go-practice/gin_practice/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -8,7 +9,7 @@ import (
 
 func GetAllAlbums(c *gin.Context) {
 	var albums []models.Album
-	models.DB.Find(&albums)
+	connections.Postgres.Find(&albums)
 	c.IndentedJSON(http.StatusOK, albums)
 }
 
@@ -19,13 +20,13 @@ func CreateAlbum(c *gin.Context) {
 		return
 	}
 	album := models.Album{Title: newAlbum.Title, Artist: newAlbum.Artist, Price: newAlbum.Price}
-	models.DB.Create(&album)
+	connections.Postgres.Create(&album)
 	c.IndentedJSON(http.StatusCreated, album)
 }
 
 func GetAlbumByID(c *gin.Context) {
 	var album models.Album
-	if err := models.DB.Where("ID = ?", c.Param("id")).First(&album).Error; err != nil {
+	if err := connections.Postgres.Where("ID = ?", c.Param("id")).First(&album).Error; err != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
 		return
 	}

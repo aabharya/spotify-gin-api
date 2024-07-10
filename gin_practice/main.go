@@ -1,15 +1,15 @@
 package main
 
 import (
+	"github.com/BinDruid/go-practice/gin_practice/connections"
 	"github.com/BinDruid/go-practice/gin_practice/cruds"
-	"github.com/BinDruid/go-practice/gin_practice/models"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
 
 func init() {
-	models.ConnectDatabase()
+	connections.Init()
 }
 
 func main() {
