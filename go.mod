@@ -1,4 +1,4 @@
-module github.com/BinDruid/go-practice/gin_practice
+module github.com/BinDruid/go-practice
 
 go 1.22.4
 

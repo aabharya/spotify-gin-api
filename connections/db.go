@@ -1,7 +1,7 @@
 package connections
 
 import (
-	"github.com/BinDruid/go-practice/gin_practice/models"
+	"github.com/BinDruid/go-practice/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

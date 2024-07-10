@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/BinDruid/go-practice/gin_practice/connections"
-	"github.com/BinDruid/go-practice/gin_practice/cruds"
+	"github.com/BinDruid/go-practice/connections"
+	"github.com/BinDruid/go-practice/cruds"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
