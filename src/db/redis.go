@@ -1,7 +1,7 @@
-package connections
+package db
 
 import (
-	"github.com/BinDruid/go-practice/settings"
+	"github.com/BinDruid/spotify-gin/settings"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/redis/go-redis/v9"
 )
