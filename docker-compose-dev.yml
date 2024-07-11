@@ -24,3 +24,9 @@ services:
       - "6378:6378"
     entrypoint: redis-server --bind 0.0.0.0 --port 6378
     network_mode: host
+
+  swagger:
+    image: ghcr.io/swaggo/swag:latest
+    volumes:
+      - ./src:/code
+    entrypoint: swag init
