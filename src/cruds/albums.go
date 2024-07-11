@@ -1,7 +1,6 @@
 package cruds
 
 import (
-	"context"
 	"encoding/json"
 	"github.com/BinDruid/spotify-gin/db"
 	"github.com/BinDruid/spotify-gin/models"
@@ -12,13 +11,12 @@ import (
 )
 
 func GetAllAlbums(c *gin.Context) {
-	ctx := context.Background()
 	var albums []models.Album
-	cachedResult, err := db.Redis.Get(ctx, "albums").Result()
+	cachedResult, err := db.Redis.Get(c, "albums").Result()
 	if err == redis.Nil {
 		db.Postgres.Find(&albums)
 		data, _ := json.Marshal(albums)
-		db.Redis.Set(ctx, "albums", data, 5*time.Minute)
+		db.Redis.Set(c, "albums", data, 5*time.Minute)
 	} else {
 		_ = json.Unmarshal([]byte(cachedResult), &albums)
 	}
@@ -33,6 +31,7 @@ func CreateAlbum(c *gin.Context) {
 	}
 	album := models.Album{Title: newAlbum.Title, Artist: newAlbum.Artist, Price: newAlbum.Price}
 	db.Postgres.Create(&album)
+	db.Redis.Del(c, "albums")
 	c.IndentedJSON(http.StatusCreated, album)
 }
 
