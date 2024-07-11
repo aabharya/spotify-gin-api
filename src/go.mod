@@ -1,4 +1,4 @@
-module github.com/BinDruid/go-practice
+module github.com/BinDruid/spotify-gin
 
 go 1.22.4
 
