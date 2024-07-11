@@ -8,7 +8,7 @@ import (
 
 var Redis *redis.Client
 
-func InitCache() {
+func InitRedis() {
 
 	Redis = redis.NewClient(&redis.Options{
 		Addr:     settings.Configs.RedisUrl,

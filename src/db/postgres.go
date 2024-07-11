@@ -10,7 +10,7 @@ import (
 
 var Postgres *gorm.DB
 
-func InitDB() {
+func InitPostgres() {
 	db, err := gorm.Open(postgres.Open(settings.Configs.PostgresUrl), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
