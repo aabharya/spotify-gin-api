@@ -13,15 +13,21 @@ type config struct {
 	CacheTTl    time.Duration
 }
 
-var dbHost = os.Getenv("DB_HOST")
-var dbUser = os.Getenv("DB_USER")
-var dbPass = os.Getenv("DB_PASS")
-var dbName = os.Getenv("DB_NAME")
-var dbPort = os.Getenv("DB_PORT")
-var redisHost = os.Getenv("REDIS_HOST")
-var redisPort = os.Getenv("REDIS_PORT")
+var Configs = &config{getPostgresUrl(), getRedisUrl(), 5 * time.Minute}
 
-var pgUrl = fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Tehran", dbHost, dbUser, dbPass, dbName, dbPort)
-var rdsUrl = fmt.Sprintf("%s:%s", redisHost, redisPort)
+func getPostgresUrl() string {
+	dbHost := os.Getenv("DB_HOST")
+	dbUser := os.Getenv("DB_USER")
+	dbPass := os.Getenv("DB_PASS")
+	dbName := os.Getenv("DB_NAME")
+	dbPort := os.Getenv("DB_PORT")
+	pgUrl := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Tehran", dbHost, dbUser, dbPass, dbName, dbPort)
+	return pgUrl
+}
 
-var Configs = &config{pgUrl, rdsUrl, 5 * time.Minute}
+func getRedisUrl() string {
+	redisHost := os.Getenv("REDIS_HOST")
+	redisPort := os.Getenv("REDIS_PORT")
+	rdsUrl := fmt.Sprintf("%s:%s", redisHost, redisPort)
+	return rdsUrl
+}
