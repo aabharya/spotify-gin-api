@@ -10,10 +10,10 @@ services:
     ports:
       - "5314:5432"
     environment:
-      POSTGRES_USER: go_practice
+      POSTGRES_USER: spotify_gin
       POSTGRES_PASSWORD: 123456
       PGPASSWORD: 123456
-      POSTGRES_DB: go_practice
+      POSTGRES_DB: spotify_gin
       PGDATA: /db_data
     volumes:
       - DB_DATA:/db_data

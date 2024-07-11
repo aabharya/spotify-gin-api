@@ -11,10 +11,10 @@ services:
     image: "postgres:15-alpine"
     restart: "no"
     environment:
-      POSTGRES_USER: go_practice
+      POSTGRES_USER: spotify_gin
       POSTGRES_PASSWORD: 123456
       PGPASSWORD: 123456
-      POSTGRES_DB: go_practice
+      POSTGRES_DB: spotify_gin
       PGDATA: /db_data
     volumes:
       - DB_DATA:/db_data
@@ -33,7 +33,7 @@ services:
       - BACKEND
 
 
-  gin_api:
+  spotify_gin:
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -42,9 +42,9 @@ services:
       - ./src:/code/
     environment:
       DB_HOST: db
-      DB_USER: go_practice
+      DB_USER: spotify_gin
       DB_PASS: 123456
-      DB_NAME: go_practice
+      DB_NAME: spotify_gin
       DB_PORT: 5432
       REDIS_HOST: redis
       REDIS_PORT: 6379

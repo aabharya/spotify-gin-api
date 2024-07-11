@@ -1,17 +1,17 @@
 package main
 
 import (
-	"github.com/BinDruid/go-practice/connections"
-	"github.com/BinDruid/go-practice/middlewares"
-	"github.com/BinDruid/go-practice/routes"
+	"github.com/BinDruid/spotify-gin/db"
+	"github.com/BinDruid/spotify-gin/middlewares"
+	"github.com/BinDruid/spotify-gin/routes"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
 
 func init() {
-	connections.InitDB()
-	connections.InitCache()
+	db.InitDB()
+	db.InitCache()
 }
 
 func main() {

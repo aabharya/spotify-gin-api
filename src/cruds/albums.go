@@ -3,8 +3,8 @@ package cruds
 import (
 	"context"
 	"encoding/json"
-	"github.com/BinDruid/go-practice/connections"
-	"github.com/BinDruid/go-practice/models"
+	"github.com/BinDruid/spotify-gin/db"
+	"github.com/BinDruid/spotify-gin/models"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
 	"net/http"
@@ -14,11 +14,11 @@ import (
 func GetAllAlbums(c *gin.Context) {
 	ctx := context.Background()
 	var albums []models.Album
-	cachedResult, err := connections.Redis.Get(ctx, "albums").Result()
+	cachedResult, err := db.Redis.Get(ctx, "albums").Result()
 	if err == redis.Nil {
-		connections.Postgres.Find(&albums)
+		db.Postgres.Find(&albums)
 		data, _ := json.Marshal(albums)
-		connections.Redis.Set(ctx, "albums", data, 5*time.Minute)
+		db.Redis.Set(ctx, "albums", data, 5*time.Minute)
 	} else {
 		_ = json.Unmarshal([]byte(cachedResult), &albums)
 	}
@@ -32,13 +32,13 @@ func CreateAlbum(c *gin.Context) {
 		return
 	}
 	album := models.Album{Title: newAlbum.Title, Artist: newAlbum.Artist, Price: newAlbum.Price}
-	connections.Postgres.Create(&album)
+	db.Postgres.Create(&album)
 	c.IndentedJSON(http.StatusCreated, album)
 }
 
 func GetAlbumByID(c *gin.Context) {
 	var album models.Album
-	if err := connections.Postgres.Where("ID = ?", c.Param("id")).First(&album).Error; err != nil {
+	if err := db.Postgres.Where("ID = ?", c.Param("id")).First(&album).Error; err != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
 		return
 	}

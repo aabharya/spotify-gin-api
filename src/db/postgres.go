@@ -1,8 +1,8 @@
-package connections
+package db
 
 import (
-	"github.com/BinDruid/go-practice/models"
-	"github.com/BinDruid/go-practice/settings"
+	"github.com/BinDruid/spotify-gin/models"
+	"github.com/BinDruid/spotify-gin/settings"
 	_ "github.com/joho/godotenv/autoload"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

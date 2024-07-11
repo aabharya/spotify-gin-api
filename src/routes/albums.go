@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/BinDruid/go-practice/cruds"
+	"github.com/BinDruid/spotify-gin/cruds"
 	"github.com/gin-gonic/gin"
 )
 
