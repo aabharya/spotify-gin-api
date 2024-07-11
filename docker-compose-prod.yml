@@ -1,0 +1,57 @@
+version: '3.9'
+
+volumes:
+  DB_DATA:
+
+networks:
+  BACKEND:
+
+services:
+  db:
+    image: "postgres:15-alpine"
+    restart: "no"
+    environment:
+      POSTGRES_USER: go_practice
+      POSTGRES_PASSWORD: 123456
+      PGPASSWORD: 123456
+      POSTGRES_DB: go_practice
+      PGDATA: /db_data
+    volumes:
+      - DB_DATA:/db_data
+    networks:
+      - BACKEND
+
+
+  redis:
+    image: redis:7.2-alpine
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 1s
+      timeout: 2s
+      retries: 10
+    networks:
+      - BACKEND
+
+
+  gin_api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: "no"
+    volumes:
+      - ./src:/code/
+    environment:
+      DB_HOST: db
+      DB_USER: go_practice
+      DB_PASS: 123456
+      DB_NAME: go_practice
+      DB_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - db
+      - redis
+    networks:
+      - BACKEND
+    ports:
+      - "8000:8000"

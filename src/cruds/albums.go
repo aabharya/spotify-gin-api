@@ -1,15 +1,27 @@
 package cruds
 
 import (
+	"context"
+	"encoding/json"
 	"github.com/BinDruid/go-practice/connections"
 	"github.com/BinDruid/go-practice/models"
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 	"net/http"
+	"time"
 )
 
 func GetAllAlbums(c *gin.Context) {
+	ctx := context.Background()
 	var albums []models.Album
-	connections.Postgres.Find(&albums)
+	cachedResult, err := connections.Redis.Get(ctx, "albums").Result()
+	if err == redis.Nil {
+		connections.Postgres.Find(&albums)
+		data, _ := json.Marshal(albums)
+		connections.Redis.Set(ctx, "albums", data, 5*time.Minute)
+	} else {
+		_ = json.Unmarshal([]byte(cachedResult), &albums)
+	}
 	c.IndentedJSON(http.StatusOK, albums)
 }
 

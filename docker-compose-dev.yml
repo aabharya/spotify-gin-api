@@ -3,9 +3,6 @@ version: '3.9'
 volumes:
   DB_DATA:
 
-networks:
-  BACKEND:
-
 services:
   db:
     image: "postgres:15-alpine"
@@ -20,37 +17,10 @@ services:
       PGDATA: /db_data
     volumes:
       - DB_DATA:/db_data
-    networks:
-      - BACKEND
-
 
   redis:
-    restart: unless-stopped
     image: redis:7.2-alpine
     expose:
-      - "6378:6379"
-    networks:
-      - BACKEND
-
-  gin_api:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    restart: "no"
-    volumes:
-      - ./src:/code/
-    environment:
-      DB_HOST: db
-      DB_USER: go_practice
-      DB_PASS: 123456
-      DB_NAME: go_practice
-      DB_PORT: 5432
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-    depends_on:
-      - db
-      - redis
-    networks:
-      - BACKEND
-    ports:
-      - "8000:8000"
+      - "6378:6378"
+    entrypoint: redis-server --bind 0.0.0.0 --port 6378
+    network_mode: host
