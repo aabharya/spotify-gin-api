@@ -10,8 +10,8 @@ import (
 )
 
 func init() {
-	db.InitDB()
-	db.InitCache()
+	db.InitPostgres()
+	db.InitRedis()
 }
 
 func main() {
