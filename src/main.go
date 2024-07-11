@@ -20,7 +20,7 @@ func main() {
 	router.Static("/static/", "../public/")
 	api := router.Group("/api")
 	v1 := api.Group("/v1")
-	routes.AddAlbumsRoute(v1)
+	routes.AddAlbumsRoute(v1, "/albums/")
 	router.GET("/healthcheck/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "OK",
