@@ -1,4 +1,4 @@
-package cruds
+package controllers
 
 import (
 	"encoding/json"
