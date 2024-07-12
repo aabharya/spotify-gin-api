@@ -23,26 +23,26 @@ func CheckPasswordHash(password, hash string) bool {
 }
 
 func Login(c *gin.Context) {
-	var user models.User
+	var userPayload models.AuthPayload
 	var userRecord models.User
 
-	if err := c.ShouldBindJSON(&user); err != nil {
+	if err := c.ShouldBindJSON(&userPayload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := db.Postgres.Where("USERNAME = ?", user.Username).First(&userRecord).Error; err != nil {
+	if err := db.Postgres.Where("USERNAME = ?", userPayload.Username).First(&userRecord).Error; err != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "user not found"})
 		return
 	}
-	userAuthenticated := CheckPasswordHash(user.Password, userRecord.Password)
+	userAuthenticated := CheckPasswordHash(userPayload.Password, userRecord.Password)
 	if !userAuthenticated {
 		c.IndentedJSON(http.StatusUnauthorized, gin.H{"message": "user not authorized"})
 		return
 	}
 	expirationTime := time.Now().Add(10 * time.Minute)
 	claims := &models.Claims{
-		Username: user.Username,
+		Username: userPayload.Username,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Unix(expirationTime.Unix(), 0))},
 	}
@@ -62,7 +62,7 @@ func Login(c *gin.Context) {
 }
 
 func RegisterUser(c *gin.Context) {
-	var newUser models.User
+	var newUser models.AuthPayload
 
 	if err := c.BindJSON(&newUser); err != nil {
 		return
