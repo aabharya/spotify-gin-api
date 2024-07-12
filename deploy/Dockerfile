@@ -4,7 +4,7 @@ LABEL maintainer="bindruid"
 ENV GOPROXY=https://goproxy.io,https://goproxy.io,direct
 ENV CGO_ENABLED=0
 ENV GOOS=linux
-COPY ./src /code/
+COPY ../src /code/
 WORKDIR /code/
 RUN go mod download
 RUN go build -a -installsuffix cgo -o server .
