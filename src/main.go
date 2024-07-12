@@ -23,7 +23,7 @@ func init() {
 func main() {
 	router := gin.Default()
 	router.Use(middlewares.RequestIDMiddleware())
-	router.Static("/static/", "../public/")
+	router.Static("/static/", "./static/")
 	routes.AddSwaggerRoute(router, "/swagger/*any")
 	api := router.Group("/api")
 	publicRoutes := api.Group("/v1")
