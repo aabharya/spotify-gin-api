@@ -11,17 +11,20 @@ import (
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenValue := c.GetHeader("Authorization")
+		if tokenValue == "" {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header is missing"})
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
 		claims := &models.Claims{}
-
 		tkn, err := jwt.ParseWithClaims(tokenValue, claims, func(token *jwt.Token) (interface{}, error) {
 			return []byte(os.Getenv("JWT_SECRET")), nil
 		})
-		if err != nil {
+		if err != nil || !tkn.Valid {
 			c.AbortWithStatus(http.StatusUnauthorized)
+			return
 		}
-		if !tkn.Valid {
-			c.AbortWithStatus(http.StatusUnauthorized)
-		}
+		c.Set("currentUser", claims.Username)
 		c.Next()
 	}
 }
