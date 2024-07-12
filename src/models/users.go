@@ -8,6 +8,11 @@ import (
 
 type User struct {
 	gorm.Model
+	Username string `json:"username" gorm:"unique"`
+	Password string `json:"password"`
+}
+
+type AuthPayload struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }

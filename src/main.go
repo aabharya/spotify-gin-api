@@ -26,9 +26,9 @@ func main() {
 	router.Static("/static/", "../public/")
 	routes.AddSwaggerRoute(router, "/swagger/*any")
 	api := router.Group("/api")
-	v1 := api.Group("/v1")
-	routes.AddUserRoute(v1, "/users")
-	authOnlyRoutes := v1.Group("")
+	publicRoutes := api.Group("/v1")
+	routes.AddUserRoute(publicRoutes, "/users")
+	authOnlyRoutes := publicRoutes.Group("")
 	authOnlyRoutes.Use(middlewares.AuthMiddleware())
 	routes.AddAlbumsRoute(authOnlyRoutes, "/albums")
 	router.GET("/healthcheck/", func(c *gin.Context) {
