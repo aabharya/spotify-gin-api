@@ -15,6 +15,6 @@ func InitPostgres() {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.AutoMigrate(&models.Album{})
+	db.AutoMigrate(&models.Album{}, &models.User{})
 	Postgres = db
 }
