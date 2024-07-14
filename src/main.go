@@ -26,11 +26,13 @@ func main() {
 	router.Static("/static/", "./static/")
 	routes.AddSwaggerRoute(router, "/swagger/*any")
 	api := router.Group("/api")
-	publicRoutes := api.Group("/v1")
-	routes.AddUserRoute(publicRoutes, "/users")
-	authOnlyRoutes := publicRoutes.Group("")
-	authOnlyRoutes.Use(middlewares.AuthMiddleware())
-	routes.AddAlbumsRoute(authOnlyRoutes, "/albums")
+	publicGroup := api.Group("/v1")
+	publicGroup.Use(middlewares.LoggingMiddleware())
+	routes.AddUserRoute(publicGroup, "/users")
+	authGroup := publicGroup.Group("")
+	authGroup.Use(middlewares.AuthMiddleware())
+	authGroup.Use(middlewares.LoggingMiddleware())
+	routes.AddAlbumsRoute(authGroup, "/albums")
 	router.GET("/healthcheck/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "OK",
